@@ -1,9 +1,3 @@
-"""
-data_loader.py
-
-Utilities to download and preprocess price data.
-"""
-
 from __future__ import annotations
 import os
 from typing import List, Optional
@@ -21,22 +15,6 @@ def download_prices(
 ) -> pd.DataFrame:
     """
     Download OHLCV data from Yahoo Finance and return Adj Close prices.
-
-    Parameters
-    ----------
-    tickers : list of str
-        Asset tickers (e.g., ["HDFCBANK.NS", "ICICIBANK.NS"]).
-    start : str
-        Start date (YYYY-MM-DD).
-    end : str or None
-        End date (YYYY-MM-DD). None = today.
-    interval : str
-        Sampling interval ("1d", "1h", etc.)
-
-    Returns
-    -------
-    prices : DataFrame
-        Adjusted close prices with Date index and columns=tickers.
     """
     df = yf.download(
         tickers,
@@ -48,7 +26,6 @@ def download_prices(
     )["Adj Close"]
 
     if isinstance(df, pd.Series):
-        # single ticker case
         df = df.to_frame(name=tickers[0])
 
     df = df.dropna(how="any")
@@ -70,3 +47,17 @@ def save_prices(prices: pd.DataFrame, path: str) -> None:
 def load_prices(path: str) -> pd.DataFrame:
     """Load prices from CSV."""
     return pd.read_csv(path, index_col=0, parse_dates=True)
+
+
+if __name__ == "__main__":
+    # Small test so you see it working
+    tickers = ["HDFCBANK.NS", "ICICIBANK.NS"]
+    prices = download_prices(tickers, start="2020-01-01")
+    print(prices.head())
+
+    log_prices = to_log_prices(prices)
+    print("\nLog prices head:")
+    print(log_prices.head())
+
+    save_prices(prices, "data/raw/banks.csv")
+    print("\nSaved to data/raw/banks.csv")
