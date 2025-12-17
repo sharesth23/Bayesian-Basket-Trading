@@ -30,7 +30,7 @@ Bayesian Basket Trading uses Bayesian statistics to:
 1. Clone the repository:
 ```bash
 git clone https://github.com/sharesth/Bayesian-Basket-Trading--Quant-project--.git
-cd Bayesian-Basket-Trading--Quant-project--
+cd Bayesian-Basket-Trading
 ```
 
 2. Install dependencies:
