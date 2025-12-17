@@ -1,6 +1,7 @@
 numpy
 pandas
-yfinance
-statsmodels
-scikit-optimize
+scipy
 matplotlib
+pymc
+arviz
+tqdm
